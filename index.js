@@ -12,7 +12,7 @@ app.use(cors({
     credentials:true
 }))
 
-app.use(express.static('public'))
+app.use(express.static(path.join(__dirname,'public')));
 
 
 try{
@@ -32,13 +32,16 @@ const Images = mongoose.model("New_Images",{
 
 const storage = multer.diskStorage({
     destination:(req,file,cb)=>{
-        cb(null,"public/Images");
+        cb(null,"public");
     },
     filename:(req,file,cb)=>{
         cb(null,file.fieldname+"_"+Date.now()+path.extname(file.originalname));
     }
 
 })
+
+console.log(__dirname);
+
 
 const upload = multer({
     storage:storage
